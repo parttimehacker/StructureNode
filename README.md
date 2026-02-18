@@ -132,7 +132,24 @@ Provides:
 
 ------------------------------------------------------------------------
 
-## Setup
+## Data FLow
+[ StructureNode ]
+        ↓  (BLE Advertising)
+[ StructureHub BLE Worker ]
+        ↓
+[ SQLite Database ]
+        ↓
+[ StructureHub Django Web Dashboard ]
+        ↓
+[ Live / History / Timeline / Risk UI ]
+
+## Design Principles
+- Maximize battery life
+- Stateless broadcast (no BLE connections required)
+- Simple home-scale deployment
+- Breadboard-first hardware design
+- Server-side intelligence layer
+- Modular evolution (V1 → V3 → V4 payloads)
 
 ### 1. Clone the Repository
 
