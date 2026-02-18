@@ -50,8 +50,8 @@ Attics, crawlespacess and othe isolated locations in a family home are susceptib
 StructureNode is used to monitor the status of these location and alert the homeowner to potential problems.
 
 ### Why was it built?
-- Roof required replacement much earlier than expected due to temperature related damage to shingles.
--   Exploring hardware integration and low power design
+- My roof required replacement much earlier than expected due to temperature related damage to shingles with resulting water damage.
+-  Exploring hardware integration and low power design
 
 ------------------------------------------------------------------------
 
@@ -242,9 +242,27 @@ Total estimated daily consumption:
 ```
 ≈ 1.0 mAh/day
 ```
+
+### Estimated Battey Life
+For a 2000 mAh battery:
+```
+2000 mAh / 1 mAh/day ≈ 2000 days
+≈ 5.5 years (theoretical)
+```
+- Real-world adjustment (temperature, regulator losses, battery aging, leakage, PIR events):
+- Practical expectation: 2–4 years.
+
+###What Dominates the Power Budget?
+- BLE radio bursts
+- Active sensor measurement window
+- Any voltage regulator inefficiency
+- Unintended wake loops (firmware bugs)
+
+> Deep sleep current is typically not the dominant factor if implemented correctly.
+
 ------------------------------------------------------------------------
 
-## Design Tradeoffs
+### Design Tradeoffs
 
 | Feature                 | Power Impact | Decision    |
 |-------------------------|--------------|-------------|
