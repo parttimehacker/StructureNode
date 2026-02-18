@@ -237,14 +237,28 @@ Sleep:
 Active:
 ```
 15 mA × (96 seconds/day total active) ≈ 0.40 mAh/day
-
 ```
 Total estimated daily consumption:
 ```
 ≈ 1.0 mAh/day
-
 ```
 ------------------------------------------------------------------------
+
+## Design Tradeoffs
+| Feature                 | Power Impact | Decision    |
+|----------|------------ -|--------------|-------------|
+| WIFI                    | High         | Rejected    |
+|----------|------------ -|--------------|-------------|
+| BLE connection mode     | Moderate     | Rejected    |
+|----------|------------ -|--------------|-------------|
+| BLE advertising         | Low          | Selected    |
+|----------|------------ -|--------------|-------------|
+| Edge ML / heavy compute | High         | Rejected    |   
+|----------|------------ -|--------------|-------------|
+| 15-minute interval      | Low          | Selected    |
+|----------|------------ -|--------------|-------------|
+| PIR interrupt           | Rate Impact  | Selected    |
+|----------|------------ -|--------------|-------------|
 
 ------------------------------------------------------------------------
 
