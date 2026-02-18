@@ -149,7 +149,7 @@ Power Consumption
 - Advertising packets can be transmitted in milliseconds.
 - The MCU returns to deep sleep almost immediately.
 
-Result: Orders of magnitude lower average current draw.
+> Result: Orders of magnitude lower average current draw.
 
 ### No Infrastructure Dependency at the Edge
 - WiFi nodes require SSID configuration and credential storage.
@@ -157,14 +157,14 @@ Result: Orders of magnitude lower average current draw.
 - BLE advertising nodes are infrastructure-independent.
 - The gateway handles networking complexity.
 
-Result: Edge nodes remain simple and resilient.
+> Result: Edge nodes remain simple and resilient.
 
 ### Separation of Concerns
 - Edge node: measurement + broadcast only.
 - Gateway: scan, validate, deduplicate.
 - Server: persistence + intelligence + UI.
 
-Result: Clean system layering and easier debugging.
+> Result: Clean system layering and easier debugging.
 
 ### Why Stateless BLE Advertising?
 No Pairing or Connection Required
@@ -173,14 +173,14 @@ No Pairing or Connection Required
 - No reconnection logic.
 - No persistent session state.
 
-Result: Reduced firmware complexity and fewer failure modes.
+> Result: Reduced firmware complexity and fewer failure modes.
 
 ### Gateway-Controlled Reliability
 - BLE advertisements are broadcast repeatedly.
 - Gateway smooths bursts and drops duplicates.
 - Occasional packet loss is acceptable in 15-minute environmental sampling.
 
-Result: Probabilistic reliability without protocol overhead.
+> Result: Probabilistic reliability without protocol overhead.
 
 ### Home-Scale Optimization
 This system is designed for:
@@ -188,14 +188,14 @@ This system is designed for:
 - Low update frequency (10–15 minutes typical)
 - Very small payload sizes
 
-BLE advertising is optimal for this scale. WiFi would be unnecessary overhead.
+> BLE advertising is optimal for this scale. WiFi would be unnecessary overhead.
 
 ### Why Compute Dew Point on the Edge?
 - Minimizes server-side dependency.
 - Preserves derived values in historical logs.
 - Enables risk evaluation even if backend logic evolves.
 
-Result: Forward-compatible data model.
+> Result: Forward-compatible data model.
 
 ------------------------------------------------------------------------
 
