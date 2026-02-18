@@ -57,15 +57,11 @@ StructureNode is used to monitor the status of these location and alert the home
 
 ## Technologies Used
 
-Example:
-
--   Python 3.x
--   Virtualenv
--   MQTT / REST API
--   Flask / Django / FastAPI (if applicable)
--   SQLite / PostgreSQL
--   Raspberry Pi / Linux
--   Docker (optional)
+- Arduino IDE supporting C/C++
+-   Seeed Studio XIAO nRF52840 host
+-   HiLetgo TPL5110 Timer Breakout Module
+-   PARALLAX PIR Motion Sensor
+-   Adafruit BME680 - Temperature, Humidity, Pressure and Gas Sensor
 
 ------------------------------------------------------------------------
 
@@ -203,6 +199,51 @@ Result: Forward-compatible data model.
 
 ------------------------------------------------------------------------
 
+## Power Budget Breakdown
+
+StructureNode is engineered for long-term Li-ion battery operation with minimal maintenance.
+
+Below is a typical duty-cycle model for a 15-minute wake interval:
+
+### Assumptions
+- 3.7V Li-ion battery
+- 2000 mAh capacity (typical 18650 cell)
+- 15-minute wake interval (96 wake events/day)
+- PIR wake events rare
+
+### Current Consumption Model
+Deep Sleep
+- nRF52840 deep sleep: ~10–20 µA
+- Sensor in standby: ~1–5 µA
+- Total sleep current: ~25 µA
+
+Sleep time per cycle: ~899 seconds
+(15 minutes − ~1 second active time)
+
+### Active Measurement + BLE Advertise
+Typical breakdown:
+- Wake + sensor read: ~50 ms
+- Dew point computation: negligible
+- BLE advertising burst (multiple packets): ~200–500 ms
+- Total active window: ~1 second
+
+Active current (radio on): ~8–15 mA average
+
+### Daily Average Current Calculation (Approximate)
+Sleep:
+```
+25 µA × 23.75 hours ≈ 0.59 mAh/day
+```
+Active:
+```
+15 mA × (96 seconds/day total active) ≈ 0.40 mAh/day
+
+```
+Total estimated daily consumption:
+```
+≈ 1.0 mAh/day
+
+```
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
