@@ -1,12 +1,12 @@
 # StructureNode
 
-Sensor used to measure and report movement and environment in different areas of a family home.
+Sensor used to report movement and environment factors impacting a family home.
 
 ------------------------------------------------------------------------
 
 ## Description
 
-This **C++** application provides the following functionality:
+This **C++** and hardware application provides the following functionality:
 
 StructureNode is a low-power, BLE-based environmental monitoring node designed for residential attic and structural health tracking. Built for DIY developers, it measures temperature, humidity, pressure, dew point, battery status, and motion, then broadcasts the data using a compact custom BLE advertising payload. The device supports hardware-selectable location IDs via DIP switches, deep sleep for extended battery life, and seamless integration with a Raspberry Pi + Django backend (StructureHub) for logging, analysis, and risk visualization. Ideal for breadboard prototyping and long-term home deployment.
 
