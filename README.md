@@ -152,6 +152,7 @@ Power Consumption
 - BLE advertising requires no connection establishment.
 - Advertising packets can be transmitted in milliseconds.
 - The MCU returns to deep sleep almost immediately.
+
 Result: Orders of magnitude lower average current draw.
 
 ### No Infrastructure Dependency at the Edge
@@ -159,12 +160,14 @@ Result: Orders of magnitude lower average current draw.
 - Router changes break deployments.
 - BLE advertising nodes are infrastructure-independent.
 - The gateway handles networking complexity.
+
 Result: Edge nodes remain simple and resilient.
 
 ### Separation of Concerns
 - Edge node: measurement + broadcast only.
 - Gateway: scan, validate, deduplicate.
 - Server: persistence + intelligence + UI.
+
 Result: Clean system layering and easier debugging.
 
 ------------------------------------------------------------------------
