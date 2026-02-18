@@ -132,17 +132,6 @@ Provides:
 
 ------------------------------------------------------------------------
 
-## Data FLow
-[ StructureNode ]
-        ↓  (BLE Advertising)
-[ StructureHub BLE Worker ]
-        ↓
-[ SQLite Database ]
-        ↓
-[ StructureHub Django Web Dashboard ]
-        ↓
-[ Live / History / Timeline / Risk UI ]
-
 ## Design Principles
 - Maximize battery life
 - Stateless broadcast (no BLE connections required)
@@ -150,6 +139,41 @@ Provides:
 - Breadboard-first hardware design
 - Server-side intelligence layer
 - Modular evolution (V1 → V3 → V4 payloads)
+
+------------------------------------------------------------------------
+
+## System Engineering Rationale
+
+StructureNode is intentionally designed around BLE advertising and a gateway architecture rather than WiFi-connected edge nodes. The decisions are driven by power efficiency, reliability, and simplicity.
+
+### Why BLE Instead of WiFi?
+Power Consumption
+- WiFi radios consume significantly more power, especially during association and DHCP negotiation.
+- BLE advertising requires no connection establishment.
+- Advertising packets can be transmitted in milliseconds.
+- The MCU returns to deep sleep almost immediately.
+Result: Orders of magnitude lower average current draw.
+
+### No Infrastructure Dependency at the Edge
+- WiFi nodes require SSID configuration and credential storage.
+- Router changes break deployments.
+- BLE advertising nodes are infrastructure-independent.
+- The gateway handles networking complexity.
+Result: Edge nodes remain simple and resilient.
+
+### Separation of Concerns
+- Edge node: measurement + broadcast only.
+- Gateway: scan, validate, deduplicate.
+- Server: persistence + intelligence + UI.
+Result: Clean system layering and easier debugging.
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+
 
 ### 1. Clone the Repository
 
