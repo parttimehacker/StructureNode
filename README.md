@@ -245,8 +245,9 @@ Total estimated daily consumption:
 ------------------------------------------------------------------------
 
 ## Design Tradeoffs
+
 | Feature                 | Power Impact | Decision    |
-|----------|------------ -|--------------|-------------|
+|-------------------------|--------------|-------------|
 | WIFI                    | High         | Rejected    |
 | BLE connection mode     | Moderate     | Rejected    |
 | BLE advertising         | Low          | Selected    |
