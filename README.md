@@ -170,6 +170,37 @@ Result: Edge nodes remain simple and resilient.
 
 Result: Clean system layering and easier debugging.
 
+### Why Stateless BLE Advertising?
+No Pairing or Connection Required
+- No bonding.
+- No GATT services to maintain.
+- No reconnection logic.
+- No persistent session state.
+
+Result: Reduced firmware complexity and fewer failure modes.
+
+### Gateway-Controlled Reliability
+- BLE advertisements are broadcast repeatedly.
+- Gateway smooths bursts and drops duplicates.
+- Occasional packet loss is acceptable in 15-minute environmental sampling.
+
+Result: Probabilistic reliability without protocol overhead.
+
+### Home-Scale Optimization
+This system is designed for:
+- Few nodes (1–10 sensors)
+- Low update frequency (10–15 minutes typical)
+- Very small payload sizes
+
+BLE advertising is optimal for this scale. WiFi would be unnecessary overhead.
+
+### Why Compute Dew Point on the Edge?
+- Minimizes server-side dependency.
+- Preserves derived values in historical logs.
+- Enables risk evaluation even if backend logic evolves.
+
+Result: Forward-compatible data model.
+
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
