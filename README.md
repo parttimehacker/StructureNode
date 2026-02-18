@@ -1,18 +1,17 @@
-# Project Name
+# StructureNode
 
-Short one-line description of your Python project.
+Sensor used to measure and report movement and environment in different areas of a family home.
 
 ------------------------------------------------------------------------
 
 ## Description
 
-This **Python** application provides the following functionality:
+This **C++** application provides the following functionality:
 
--   Describe what your application does.
--   Mention whether it runs locally, on a server, Raspberry Pi, cloud
-    VM, etc.
--   Mention hardware, APIs, or external services if applicable.
--   Briefly state the purpose of the project.
+-   Measure temperature and humidity in a single location.
+-   Periodically broadcasts the information every 15 minutes.
+-   Runs off battery power in an optimized ESP32 processor board
+-   The Bluetooth Low Energy message is recorded by a Django server.
 
 ------------------------------------------------------------------------
 
@@ -47,18 +46,15 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 ### What problem does this project solve?
 
-Explain the core problem your project addresses.
+Attics, crawlespacess and othe isolated locations in a family home are susceptible to mosture damage. 
 
 ### What is the purpose?
 
-Describe the intended use case and environment.
+StructureNode is used to monitor the status of these location and alert the homeowner to potential problems.
 
 ### Why was it built?
-
--   Learning Python
--   Exploring hardware integration
--   Building a reusable service
--   Production deployment
+- Roof required replacement much earlier than expected due to temperature related damage to shingles.
+-   Exploring hardware integration and low power design
 
 ------------------------------------------------------------------------
 
