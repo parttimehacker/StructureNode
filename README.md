@@ -71,12 +71,21 @@ Example:
 
 ## Features
 
--   Modular Python design
--   Logging support
--   Command-line arguments
--   Service-friendly architecture
--   Hardware or API integration
--   Clean shutdown handling
+🔋 Ultra-Low Power BLE Sensor Node – Battery-optimized attic/structure monitoring device designed for long sleep cycles with optional PIR wake events.
+
+📡 Custom BLE Advertising Payload – Broadcasts temperature, humidity, pressure, dew point, battery voltage/percentage, motion flags, and location ID in a compact structured packet.
+
+🏠 Multi-Location Support via DIP Switch – Hardware-selectable location encoding (e.g., Attic, Crawlspace, Garage) without firmware changes.
+
+🌡 Environmental Risk Monitoring – Tracks moisture-related conditions that impact roof decking, insulation, and structural wood integrity.
+
+💤 Deep Sleep Architecture** – Supports timed wake intervals and optional interrupt-based wake (PIR), maximizing Li-ion battery life.
+
+🧠 Server-Ready Design** – Built to integrate with a Raspberry Pi + Django backend (StructureHub/AtticGuard) for logging, trend analysis, and risk dashboards.
+
+🛠 Breadboard-Friendly Hardware** – Designed for DIY prototyping using Feather nRF52840 / ESP32-class boards and common I2C environmental sensors.
+
+📊 Debug + Production Modes** – Serial diagnostics for development plus clean BLE output for unattended deployment.
 
 ------------------------------------------------------------------------
 
