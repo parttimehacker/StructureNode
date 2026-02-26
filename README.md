@@ -14,8 +14,8 @@ StructureNode is a low-power, BLE-based environmental monitoring node designed f
 
 ## Badges
 
-![Platform](https://img.shields.io/badge/Platform-Arduino-green))&nbsp; &nbsp;
-![Language](https://img.shields.io/badge/Language-C++-green)&nbsp; &nbsp;
+![Platform](https://img.shields.io/badge/Platform-Arduino-darkgreen)&nbsp; &nbsp;
+![Language](https://img.shields.io/badge/Language-C++-darkgreen)&nbsp; &nbsp;
 ![Domain](https://img.shields.io/badge/Domain-IOT-yellow)&nbsp; &nbsp;
 ![Connectivity](https://img.shields.io/badge/Connectivity-Bluetooth-blue)&nbsp; &nbsp;
 
