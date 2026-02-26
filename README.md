@@ -156,8 +156,7 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-Created by **Dave Wilson**
-
-GitHub: https://github.com/parttimehacker\
-Website: https://theairportguy.net\
-Email: parttimehacker@gmail.com
+- Created by **Dave Wilson**
+- GitHub: https://github.com/parttimehacker
+- Website: https://theairportguy.net
+- Email: parttimehacker@gmail.com
