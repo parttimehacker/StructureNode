@@ -150,7 +150,7 @@ Example environment variables:
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License.&nbsp; &nbsp;[![License:MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ------------------------------------------------------------------------
 
