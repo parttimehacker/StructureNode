@@ -79,45 +79,24 @@ StructureNode is used to monitor the status of these location and alert the home
 
 ------------------------------------------------------------------------
 
+## Installation
 
-------------------------------------------------------------------------
-
-
-
-### 1. Clone the Repository
-
-``` bash
-git clone https://github.com/yourusername/projectname.git
-cd projectname
+- Clone the Repository
+- Open Your Devlopment IDE
+- Open the StructureNode.ino file
+- Import the Studio XIAO nRF52840 processor library
+- Import application specific libraries
 ```
-
-### 2. Create a Virtual Environment
-
-``` bash
-python3 -m venv venv
-source venv/bin/activate
+#include <Arduino.h>
+#include <Wire.h>
+#include <math.h>
+#include <bluefruit.h>
+#include <Adafruit_SHT31.h>
+#include <Adafruit_BMP280.h>
 ```
-
-### 3. Install Dependencies
-
-``` bash
-pip install -r requirements.txt
-```
-
-------------------------------------------------------------------------
-
-## Usage
-
-``` bash
-python3 main.py --option value
-```
-
-Example arguments:
-
--   `--group`
--   `--display`
--   `--debug`
--   `--config`
+- Compile and build
+- Open monitor to verify loading
+  
 
 ------------------------------------------------------------------------
 
