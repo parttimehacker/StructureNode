@@ -113,18 +113,16 @@ Example environment variables:
 
 ![Status](https://progress-bar.dev/75/?title=progress)
 
--   Development
--   Stable
--   Production
--   Experimental
+- In development and testing
+- Converting breadboard to protoboard
+- Building enclosure
 
 ------------------------------------------------------------------------
 
 ## Room for Improvement
 
--   Improve modularization
+-   Improve power savings
 -   Add unit tests
--   Add Docker support
 -   Improve documentation
 
 ------------------------------------------------------------------------
