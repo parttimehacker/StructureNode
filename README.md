@@ -82,10 +82,10 @@ StructureNode is used to monitor the status of these location and alert the home
 ## Installation
 
 - Clone the Repository
-- Open Your Devlopment IDE
+- Launch your development IDE
 - Open the StructureNode.ino file
 - Import the Studio XIAO nRF52840 processor library
-- Import application specific libraries
+- Import the following application specific libraries
 ```
 #include <Arduino.h>
 #include <Wire.h>
@@ -96,7 +96,6 @@ StructureNode is used to monitor the status of these location and alert the home
 ```
 - Compile and build
 - Open monitor to verify loading
-  
 
 ------------------------------------------------------------------------
 
@@ -107,33 +106,6 @@ Example environment variables:
     MQTT_HOST=localhost
     MQTT_PORT=1883
     DEBUG=True
-
-------------------------------------------------------------------------
-
-## Running as a Service (Linux)
-
-Example systemd service file:
-
-    [Unit]
-    Description=Project Name Service
-    After=network.target
-
-    [Service]
-    User=youruser
-    WorkingDirectory=/path/to/project
-    ExecStart=/path/to/venv/bin/python main.py
-    Restart=always
-
-    [Install]
-    WantedBy=multi-user.target
-
-Enable service:
-
-``` bash
-sudo systemctl daemon-reload
-sudo systemctl enable projectname
-sudo systemctl start projectname
-```
 
 ------------------------------------------------------------------------
 
@@ -184,8 +156,8 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-Created by **Your Name**
+Created by **Dave Wilson**
 
-GitHub: https://github.com/yourusername\
-Website: https://yourwebsite.com\
-Email: optional
+GitHub: https://github.com/parttimehacker\
+Website: https://theairportguy.net\
+Email: parttimehacker@gmail.com
