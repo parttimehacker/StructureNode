@@ -14,9 +14,10 @@ StructureNode is a low-power, BLE-based environmental monitoring node designed f
 
 ## Badges
 
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)\
-![Language](https://img.shields.io/badge/Language-C++-blue)
+![Platform](https://img.shields.io/badge/Platform-Arduino-darkgreen)&nbsp; &nbsp;
+![Language](https://img.shields.io/badge/Language-C++-darkgreen)&nbsp; &nbsp;
+![Domain](https://img.shields.io/badge/Domain-IOT-yellow)&nbsp; &nbsp;
+![Connectivity](https://img.shields.io/badge/Connectivity-Bluetooth-blue)&nbsp; &nbsp;
 
 ------------------------------------------------------------------------
 
@@ -25,17 +26,19 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 -   [General Information](#general-information)
 -   [Technologies Used](#technologies-used)
 -   [Features](#features)
--   [Architecture](#architecture)
--   [Setup](#setup)
--   [Usage](#usage)
--   [Configuration](#configuration)
--   [Running as a Service (Linux)](#running-as-a-service-linux)
+-   [Installation](#installation)
 -   [Project Status](#project-status)
 -   [Room for Improvement](#room-for-improvement)
 -   [Roadmap](#roadmap)
 -   [Acknowledgements](#acknowledgements)
 -   [License](#license)
 -   [Contact](#contact)
+
+Supporting documents in docs directory
+
+- Architecture
+- Design goals and approach
+- Power management strategy
 
 ------------------------------------------------------------------------
 
@@ -78,277 +81,43 @@ StructureNode is used to monitor the status of these location and alert the home
 
 ------------------------------------------------------------------------
 
-## Architecture
+## Installation
 
-StructureNode follows a lightweight edge-node → gateway → web dashboard model optimized for low power and long-term home deployment.
-
-1️⃣ Edge Sensor Node (Battery Powered)
-- Microcontroller: Feather nRF52840 / ESP32-class board
-- Environmental Sensor (I2C): temperature, humidity, pressure
-- PIR motion sensor (digital interrupt)
-- DIP switch for hardware-based location ID
-- Custom BLE advertising payload (no pairing required)
-- Deep sleep between broadcasts
-
-The node wakes on:
-- Timed interval (e.g., every 15 minutes)
-- PIR interrupt (rare event)
-
-It measures, computes dew point and battery percentage, packages a compact payload, advertises via BLE, then returns to sleep.
-
-2️⃣ BLE Gateway (Always-On Listener)
-
-- Raspberry Pi Zero 2 W or Pi 4
-- Python BLE worker (Bleak-based scanner)
-- Filters by manufacturer ID / payload format
-- Parses and validates payload
-- Writes readings to SQLite
-
-Designed to:
-
-- Drop duplicate advertisements
-- Smooth burst transmissions
-- Maintain lightweight CPU usage
-
-3️⃣ Django Server (StructureHub / AtticGuard)
-
-- Django + Apache + mod_wsgi
-- SQLite backend
-- REST-style endpoints (/api/last, /api/history)
-- Live dashboard with risk cards
-- Trend detection and anomaly analysis
-
-Provides:
-
-- Moisture risk assessment
-- Dew point monitoring
-- Motion activity tracking
-- Battery health monitoring
-- Historical charts and timeline views
-
-------------------------------------------------------------------------
-
-## Design Principles
-- Maximize battery life
-- Stateless broadcast (no BLE connections required)
-- Simple home-scale deployment
-- Breadboard-first hardware design
-- Server-side intelligence layer
-- Modular evolution (V1 → V3 → V4 payloads)
-
-------------------------------------------------------------------------
-
-## System Engineering Rationale
-
-StructureNode is intentionally designed around BLE advertising and a gateway architecture rather than WiFi-connected edge nodes. The decisions are driven by power efficiency, reliability, and simplicity.
-
-### Why BLE Instead of WiFi?
-Power Consumption
-- WiFi radios consume significantly more power, especially during association and DHCP negotiation.
-- BLE advertising requires no connection establishment.
-- Advertising packets can be transmitted in milliseconds.
-- The MCU returns to deep sleep almost immediately.
-
-> Result: Orders of magnitude lower average current draw.
-
-### No Infrastructure Dependency at the Edge
-- WiFi nodes require SSID configuration and credential storage.
-- Router changes break deployments.
-- BLE advertising nodes are infrastructure-independent.
-- The gateway handles networking complexity.
-
-> Result: Edge nodes remain simple and resilient.
-
-### Separation of Concerns
-- Edge node: measurement + broadcast only.
-- Gateway: scan, validate, deduplicate.
-- Server: persistence + intelligence + UI.
-
-> Result: Clean system layering and easier debugging.
-
-### Why Stateless BLE Advertising?
-No Pairing or Connection Required
-- No bonding.
-- No GATT services to maintain.
-- No reconnection logic.
-- No persistent session state.
-
-> Result: Reduced firmware complexity and fewer failure modes.
-
-### Gateway-Controlled Reliability
-- BLE advertisements are broadcast repeatedly.
-- Gateway smooths bursts and drops duplicates.
-- Occasional packet loss is acceptable in 15-minute environmental sampling.
-
-> Result: Probabilistic reliability without protocol overhead.
-
-### Home-Scale Optimization
-This system is designed for:
-- Few nodes (1–10 sensors)
-- Low update frequency (10–15 minutes typical)
-- Very small payload sizes
-
-> BLE advertising is optimal for this scale. WiFi would be unnecessary overhead.
-
-### Why Compute Dew Point on the Edge?
-- Minimizes server-side dependency.
-- Preserves derived values in historical logs.
-- Enables risk evaluation even if backend logic evolves.
-
-> Result: Forward-compatible data model.
-
-------------------------------------------------------------------------
-
-## Power Budget Breakdown
-
-StructureNode is engineered for long-term Li-ion battery operation with minimal maintenance.
-
-Below is a typical duty-cycle model for a 15-minute wake interval:
-
-### Assumptions
-- 3.7V Li-ion battery
-- 2000 mAh capacity (typical 18650 cell)
-- 15-minute wake interval (96 wake events/day)
-- PIR wake events rare
-
-### Current Consumption Model
-Deep Sleep
-- nRF52840 deep sleep: ~10–20 µA
-- Sensor in standby: ~1–5 µA
-- Total sleep current: ~25 µA
-
-Sleep time per cycle: ~899 seconds
-(15 minutes − ~1 second active time)
-
-### Active Measurement + BLE Advertise
-Typical breakdown:
-- Wake + sensor read: ~50 ms
-- Dew point computation: negligible
-- BLE advertising burst (multiple packets): ~200–500 ms
-- Total active window: ~1 second
-
-Active current (radio on): ~8–15 mA average
-
-### Daily Average Current Calculation (Approximate)
-Sleep:
+- Clone the Repository
+- Launch your development IDE
+- Open the StructureNode.ino file
+- Import the Studio XIAO nRF52840 processor library
+- Import the following application specific libraries
 ```
-25 µA × 23.75 hours ≈ 0.59 mAh/day
+#include <Arduino.h>
+#include <Wire.h>
+#include <math.h>
+#include <bluefruit.h>
+#include <Adafruit_SHT31.h>
+#include <Adafruit_BMP280.h>
 ```
-Active:
-```
-15 mA × (96 seconds/day total active) ≈ 0.40 mAh/day
-```
-Total estimated daily consumption:
-```
-≈ 1.0 mAh/day
-```
-
-### Estimated Battey Life
-For a 2000 mAh battery:
-```
-2000 mAh / 1 mAh/day ≈ 2000 days
-≈ 5.5 years (theoretical)
-```
-- Real-world adjustment (temperature, regulator losses, battery aging, leakage, PIR events):
-- Practical expectation: 2–4 years.
-
-###What Dominates the Power Budget?
-- BLE radio bursts
-- Active sensor measurement window
-- Any voltage regulator inefficiency
-- Unintended wake loops (firmware bugs)
-
-> Deep sleep current is typically not the dominant factor if implemented correctly.
-
-------------------------------------------------------------------------
-
-### Design Tradeoffs
-
-| Feature                 | Power Impact | Decision    |
-|-------------------------|--------------|-------------|
-| WIFI                    | High         | Rejected    |
-| BLE connection mode     | Moderate     | Rejected    |
-| BLE advertising         | Low          | Selected    |
-| Edge ML / heavy compute | High         | Rejected    |   
-| 15-minute interval      | Low          | Selected    |
-| PIR interrupt           | Rate Impact  | Selected    |
-
-
-------------------------------------------------------------------------
-
-
-
-### 1. Clone the Repository
-
-``` bash
-git clone https://github.com/yourusername/projectname.git
-cd projectname
-```
-
-### 2. Create a Virtual Environment
-
-``` bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-``` bash
-pip install -r requirements.txt
-```
-
-------------------------------------------------------------------------
-
-## Usage
-
-``` bash
-python3 main.py --option value
-```
-
-Example arguments:
-
--   `--group`
--   `--display`
--   `--debug`
--   `--config`
+- Compile and build
+- Open monitor to verify loading
 
 ------------------------------------------------------------------------
 
 ## Configuration
 
-Example environment variables:
+The major components include the following:
 
-    MQTT_HOST=localhost
-    MQTT_PORT=1883
-    DEBUG=True
+-   Seeed Studio XIAO nRF52840 processor
+-   HiLetgo TPL5110 Timer Breakout Module
+-   PARALLAX PIR Motion Sensor
+-   Adafruit BME680 environment sensor
+-   Pololu 3.3v StepUp / StepDown volage regulator
+-   3.7 Lipo Battery
 
-------------------------------------------------------------------------
+Electronic parts needed:
 
-## Running as a Service (Linux)
-
-Example systemd service file:
-
-    [Unit]
-    Description=Project Name Service
-    After=network.target
-
-    [Service]
-    User=youruser
-    WorkingDirectory=/path/to/project
-    ExecStart=/path/to/venv/bin/python main.py
-    Restart=always
-
-    [Install]
-    WantedBy=multi-user.target
-
-Enable service:
-
-``` bash
-sudo systemctl daemon-reload
-sudo systemctl enable projectname
-sudo systemctl start projectname
-```
+- Resistors and capacitors
+- 2N3904 adn 2N3906 transistors
+- Breadboard (developemnt)
+- Protoboard (production)
 
 ------------------------------------------------------------------------
 
@@ -356,18 +125,16 @@ sudo systemctl start projectname
 
 ![Status](https://progress-bar.dev/75/?title=progress)
 
--   Development
--   Stable
--   Production
--   Experimental
+- In development and testing
+- Converting breadboard to protoboard
+- Building enclosure
 
 ------------------------------------------------------------------------
 
 ## Room for Improvement
 
--   Improve modularization
+-   Improve power savings
 -   Add unit tests
--   Add Docker support
 -   Improve documentation
 
 ------------------------------------------------------------------------
@@ -393,14 +160,13 @@ sudo systemctl start projectname
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License.&nbsp; &nbsp;[![License:MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ------------------------------------------------------------------------
 
 ## Contact
 
-Created by **Your Name**
-
-GitHub: https://github.com/yourusername\
-Website: https://yourwebsite.com\
-Email: optional
+- Created by **Dave Wilson**
+- GitHub: https://github.com/parttimehacker
+- Website: https://theairportguy.net
+- Email: parttimehacker@gmail.com
