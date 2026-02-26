@@ -34,6 +34,12 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 -   [License](#license)
 -   [Contact](#contact)
 
+Supporting documents in docs directory
+
+- Architecture
+- Design goals and approach
+- Power management strategy
+
 ------------------------------------------------------------------------
 
 ## General Information
@@ -97,11 +103,21 @@ StructureNode is used to monitor the status of these location and alert the home
 
 ## Configuration
 
-Example environment variables:
+The major components include the following:
 
-    MQTT_HOST=localhost
-    MQTT_PORT=1883
-    DEBUG=True
+-   Seeed Studio XIAO nRF52840 processor
+-   HiLetgo TPL5110 Timer Breakout Module
+-   PARALLAX PIR Motion Sensor
+-   Adafruit BME680 environment sensor
+-   Pololu 3.3v StepUp / StepDown volage regulator
+-   3.7 Lipo Battery
+
+Electronic parts needed:
+
+- Resistors and capacitors
+- 2N3904 adn 2N3906 transistors
+- Breadboard (developemnt)
+- Protoboard (production)
 
 ------------------------------------------------------------------------
 
