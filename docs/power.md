@@ -51,7 +51,7 @@ For a 2000 mAh battery:
 - Real-world adjustment (temperature, regulator losses, battery aging, leakage, PIR events):
 - Practical expectation: 2–4 years.
 
-###What Dominates the Power Budget?
+### What Dominates the Power Budget?
 - BLE radio bursts
 - Active sensor measurement window
 - Any voltage regulator inefficiency
